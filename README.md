@@ -2,6 +2,14 @@
 
 ## Resources
 
+## Notes
+
+No need for augmentation since 30k images is quite a few for colab.
+
+Read a bunch of source code for pytorch cuz the documentation is significantly less than tensorflow.
+
+Learned too much, enough to chew for quite a while.
+
 #### Papers
 
 - [Show, Attend and Tell: Neural Image Caption Generation with Visual Attention](https://arxiv.org/abs/1502.03044)
