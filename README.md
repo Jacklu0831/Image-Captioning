@@ -1,6 +1,8 @@
 # Image Captioning
 
-To explore the fascinating intersections between computer vision and natural language processing, I implemented the image captioning model in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) with [customizations](#Key-Info). The encoder-decoder model proved their worth in machine translation tasks so researchers started using it for translating image features into language in a similar way. However, the biggest difference between translating the extracted features of an image and a French sentence both to an English sentence is that the visual information need to be heavily compressed into a just few bytes. Therefore, to build an image captioning model with the encoder-decoder model, the attention algorithm that is able to pick out only the key to higher performance. 
+To explore the fascinating intersections between computer vision and natural language processing, I implemented the image captioning model in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) with [customizations](#Key-Info), which is a big improvement from [Show and Tell](https://arxiv.org/abs/1411.4555).
+
+The encoder-decoder model proved their worth in machine translation tasks so researchers started using it for translating image features into language in a similar way. However, the biggest difference between translating the extracted features of an image and a French sentence both to an English sentence is that the visual information need to be heavily compressed into a just few bytes. Therefore, to build an image captioning model with the encoder-decoder model, the attention algorithm that is able to pick out only the key to higher performance. 
 
 In this project, I learned a lot about integrating feature extraction with attention and LSTM, the underlying math equations from papers (best part of the paper), and even using PyTorch framework. Below is a sample result of my trained model. 
 

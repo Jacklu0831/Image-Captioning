@@ -90,10 +90,20 @@ class Decoder(nn.Module):
 		self.gate = nn.Linear(dec_dim, enc_dim) # weight of weighted encoding t LSTM
 		self.sigmoid = nn.Sigmoid()
 		self.fc = nn.Linear(dec_dim, vocab_size)
+
+	def init_weights(self):
 		# initialize weights (weights all (-0.1, 1) and bias all 0)
 		self.embedding.weight.data.uniform_(-0.1, 0.1)
 		self.fc.bias.data.fill_(0)
 		self.fc.weight.data.uniform_(-0.1, 0.1)
+
+	def init_state(self, enc_out):
+		# initialize hidden and cell states of LSTM
+		mean_enc_out = enc_out.mean(dim=1) # mean pixel val -> (batch_size, decoder_dim)
+		hidden = self.init_hidden(mean_enc_out)
+		cell = self.init_cell(mean_enc_out)
+		return hidden, cell
+
 
 	def forward(self, enc_out, enc_caps, len_caps):
 		batch_size = enc_out.size(0)
@@ -112,9 +122,7 @@ class Decoder(nn.Module):
 		embeddings = self.embedding(enc_caps)
 
 		# initialize hidden and cell states of LSTM
-		mean_enc_out = enc_out.mean(dim=1) # mean pixel val -> (batch_size, decoder_dim)
-		hidden = self.init_hidden(mean_enc_out)
-		cell = self.init_cell(mean_enc_out)
+		hidden, cell = self.init_state(enc_out)
 
 		# get rid of <end>
 		len_decs = (len_caps-1).toList()
