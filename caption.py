@@ -7,30 +7,34 @@ import os
 
 class CapData(Dataset):
 	'''
-	Caption class inherits PyTorch dataset for the PyTorch DataLoader
+	Dataset class to be used in DataLoader class for creating batches.
 	'''
 
-	def __init__(self, in_dir, data_type, split, transform=None):
-		# get parameters, images, encoded captions, caption lengths
-		if split not in {'train', 'val', 'test'}:
-			raise Exception("split value is not valid")
-
+	def __init__(self, input_dir, data_type, split, transform=None):
+		# get split/section of data
+		assert split in {'train', 'val', 'test'}:
 		self.split = split
-		self.f = h5py.File(os.path.join(in_dir, self.split + '_imgs.hdf5'), 'r')
+
+		# load file data and attribute
+		self.f = h5py.File(os.path.join(input_dir, self.split + '_imgs.hdf5'), 'r')
 		self.cpi = self.f.attrs['captions_per_image']
 		self.imgs = self.f['images']
 
-		with open(os.path.join(in_dir, self.split + '_enccaps.json'), 'r') as f:
+		# obtain captions and caption lengths
+		with open(os.path.join(input_dir, self.split + '_enccaps.json'), 'r') as f:
 			self.caps = json.load(f)
-		with open(os.path.join(in_dir, self.split + '_lencaps.json'), 'r') as f:
+		with open(os.path.join(input_dir, self.split + '_lencaps.json'), 'r') as f:
 			self.len_caps = json.load(f)
 
-		self.size = len(caps)
+		self.size = len(self.caps)
 		self.transform = transform
 
 	def __getitem__(self, cap_i):
+		"""
+		Get the corresponding image and caption with given index
+		"""
 		img_i = cap_i // self.cpi  # each image corresponds to cpi of captions
-		img = torch.FloatTensor(self.imgs[img_i]/255.)
+		img = torch.FloatTensor(self.imgs[img_i] / 255.)
 		cap = torch.LongTensor(self.caps[cap_i])
 		cap_l = torch.LongTensor(self.len_caps[cap_i])
 
@@ -40,7 +44,7 @@ class CapData(Dataset):
 		if self.split is 'train':
 			return img, cap, cap_l
 		else:
-			# if not training, need to return all captions for calculating BLEU score
+			# return all captions of the image for calculating BLEU score (eval and test)
 			all_cap = torch.LongTensor(self.caps[self.cpi*img_i : self.cpi*(img_i+1)])
 			return img, cap, cap_l, all_cap
 

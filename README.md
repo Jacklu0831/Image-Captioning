@@ -1,10 +1,10 @@
 # Image Captioning
 
-To explore the fascinating intersections between computer vision and natural language processing, I implemented the image captioning model in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) with [customizations](#Key-Info), which is a big improvement from [Show and Tell](https://arxiv.org/abs/1411.4555).
+To explore the fascinating intersections between computer vision and natural language processing, I implemented the image captioning model in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) with [customizations](#Key-Info).
 
 The encoder-decoder model proved their worth in machine translation tasks so researchers started using it for translating image features into language in a similar way. However, the biggest difference between translating the extracted features of an image and a French sentence both to an English sentence is that the visual information need to be heavily compressed into a just few bytes. Therefore, to build an image captioning model with the encoder-decoder model, the attention algorithm that is able to pick out only the key to higher performance. 
 
-In this project, I learned a lot about integrating feature extraction with attention and LSTM, the underlying math equations from papers (best part of the paper), and even using PyTorch framework. Below is a sample result of my trained model. 
+In this project, I learned a lot about integrating feature extraction with attention and LSTM, the underlying math equations from papers, and even using PyTorch framework. Below is a sample result of my trained model. 
 
 <p align="center"><img src="assets/results/1.jpg"></p>
 
@@ -29,18 +29,18 @@ Below are some of my choices about the implementation (chronological order).
 
 - **PyTorch** both for its pythonic syntax and to utilize the strong GPU acceleration. There is less documentation on PyTorch so I ended up learning a lot more by reading a bit of source code.
 - **Colab's T4 GPU** from google (thank you!), which was strong enough for Flickr30k with small batch sizes (max 12).
-- **Flickr30k** dataset because MS COCO requires enormous training time and computational power for Colab. [Link to download](http://cs.stanford.edu/people/karpathy/deepimagesent/caption_datasets.zip) from Andrej Karpathy.
+- **Flickr30k** dataset because MS COCO requires enormous training time and computational power for Colab. [Link to download](http://cs.stanford.edu/people/karpathy/deepimagesent/caption_datasets.zip) from Andrej Karpathy. He also clarified why there is a 'restval' split in [this tweet](https://twitter.com/karpathy/status/592193801310973952).
 - **No pre-trained embedding** because training my own embedding is not so computationally expensive and fits to context
 - **Soft attention** (deterministic) for its differentiability (simple standard backprop). Intuitively, soft attention looks at the whole image while focusing on some parts while hard attention only looks at one randomly weighted choice at a time.
 - **Mult-layer perceptron** for the attention model, as from [the paper](https://arxiv.org/abs/1502.03044).
 - **Doubly stochastic attention regularization parameter** was used to encourage the model to pay equal attention to every part of the image over a course of generation. This was used to improve the score in [the paper](https://arxiv.org/abs/1502.03044).
 - **BLEU-4** score for both training (early stopping) and evaluation.
-- **Teacher forcing** (use GT as input to each LSTMCell iteration) to achieve faster convergence. `Equation 6` of [the paper](https://arxiv.org/abs/1502.03044) clearly indicates the dependence of the context vector (attention output) on the previous hidden state, which itself is dependent on the previous outputs of the LSTM decoder (trace back to `equations 1, 2, 3`) .mlp 
+- **Teacher forcing** (use GT as input to each LSTMCell iteration) to achieve faster convergence. `Equation 6` of [the paper](https://arxiv.org/abs/1502.03044) clearly indicates the dependence of the context vector (attention output) on the previous hidden state, which itself is dependent on the previous outputs of the LSTM decoder (trace back to `equations 1, 2, 3`).
 - **Beam Search** to find the most optimal sequence after decoder does the heavy lifting.
 
 ---
 
-## Performance Evaluation
+## Performance
 
 Under development.
 
@@ -50,7 +50,7 @@ Under development.
 
 #### Dependencies
 
-Under development.
+NumPy, os, json, h5py, PyTorch, matplotlib, Pillow, scikit-image, SciPy, Jupyter Notebook/Google Colab, tqdm.
 
 #### Train
 
@@ -60,7 +60,7 @@ Under development.
 
 ## Possible Improvements
 
-- Better hardware enablese MS COCO, higher batch size, higher epoch -> higher performance
+- Better hardware enables the use of MS COCO, higher batch size, higher epoch
 - Try hard-attention and compare performances
 - Fine-tune ResNet longer to fit the dataset
 - Perform image augmentation (ie. horizontal flip) ie MS COCO is still not enough (unlikely)
