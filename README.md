@@ -28,6 +28,7 @@ Below are some of my choices about the implementation (chronological order).
 - **PyTorch** both for its pythonic syntax and to utilize the strong GPU acceleration. There is less documentation on PyTorch so I ended up learning a lot more by reading a bit of source code.
 - **Colab's T4 GPU** from google (thank you!), which was strong enough for Flickr30k with small batch sizes (max 12).
 - **Flickr30k** dataset because MS COCO requires enormous training time and computational power for Colab. [Link to download](http://cs.stanford.edu/people/karpathy/deepimagesent/caption_datasets.zip) from Andrej Karpathy.
+- **No pre-trained embedding** because training my own embedding is not so computationally expensive and fits to context
 - **Soft attention** (deterministic) for its differentiability (simple standard backprop). Intuitively, soft attention looks at the whole image while focusing on some parts while hard attention only looks at one randomly weighted choice at a time.
 - **Mult-layer perceptron** for the attention model, as from [the paper](https://arxiv.org/abs/1502.03044).
 - **Doubly stochastic attention regularization parameter** was used to encourage the model to pay equal attention to every part of the image over a course of generation. This was used to improve the score in [the paper](https://arxiv.org/abs/1502.03044).

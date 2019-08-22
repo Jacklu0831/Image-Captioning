@@ -21,7 +21,8 @@ class Encoder(nn.Module):
 		self.net = nn.Sequential(*list(net.children())[:-2])
 
 		self.a_pool = nn.AdaptiveAvgPool2d((enc_img_size, enc_img_size))
-		
+
+	def fine_tune(self, fine_tune)
 		# fine tuning block 2-4
 		for p in self.net.parameters():
 			p.requires_grad = False
@@ -93,13 +94,6 @@ class Decoder(nn.Module):
 		self.embedding.weight.data.uniform_(-0.1, 0.1)
 		self.fc.bias.data.fill_(0)
 		self.fc.weight.data.uniform_(-0.1, 0.1)
-
-	def load_embeddings(self, embeddings):
-		self.embeddings.weight = nn.Parameter(embeddings)
-
-	def fine_tune_embeddings(self, fine_tune=True):
-		for p in self.embedding.parameters():
-			p.requires_grad = fine_tune
 
 	def forward(self, enc_out, enc_caps, len_caps):
 		batch_size = enc_out.size(0)
