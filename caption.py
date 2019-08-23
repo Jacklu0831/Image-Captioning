@@ -10,9 +10,9 @@ class CapData(Dataset):
 	Dataset class to be used in DataLoader class for creating batches.
 	'''
 
-	def __init__(self, input_dir, data_type, split, transform=None):
+	def __init__(self, input_dir, split, transform=None):
 		# get split/section of data
-		assert split in {'train', 'val', 'test'}:
+		assert split in {'train', 'val', 'test'}
 		self.split = split
 
 		# load file data and attribute
@@ -45,7 +45,7 @@ class CapData(Dataset):
 			return img, cap, cap_l
 		else:
 			# return all captions of the image for calculating BLEU score (eval and test)
-			all_cap = torch.LongTensor(self.caps[self.cpi*img_i : self.cpi*(img_i+1)])
+			all_cap = torch.LongTensor(self.caps[self.cpi*img_i: self.cpi*(img_i+1)])
 			return img, cap, cap_l, all_cap
 
 	def __len__(self):
