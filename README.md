@@ -1,3 +1,5 @@
+# This project is currently under development.
+
 # Image Captioning
 
 To explore the fascinating intersections between computer vision and natural language processing, I implemented the image captioning model in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) with [customizations](#Key-Info).
