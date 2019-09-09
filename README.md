@@ -1,4 +1,6 @@
-# This project is currently under development.
+I'm currently a bit caught up with research and uni in general, will actually get the training done in a later date.
+
+<img src="https://pics.me.me/my-old-programming-projects-waiting-for-me-to-finish-them-61958056.png">
 
 # Image Captioning
 
