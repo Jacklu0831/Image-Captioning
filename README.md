@@ -1,3 +1,7 @@
+I'm currently a bit caught up with research and uni in general, will actually get the training done in a later date.
+
+<img src="https://pics.me.me/my-old-programming-projects-waiting-for-me-to-finish-them-61958056.png">
+
 # Image Captioning
 
 To explore the fascinating intersections between computer vision and natural language processing, I implemented the image captioning model in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) with [some tweaks](#Key-Info).
