@@ -4,7 +4,7 @@ I'm currently a bit caught up with research and uni in general, will actually ge
 
 # Image Captioning
 
-To explore the fascinating intersections between computer vision and natural language processing, I implemented the image captioning model in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) with [some tweaks](#Key-Info).
+To explore the fascinating intersections between computer vision and natural language processing, I implemented the image captioning model in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) with [some tweaks](#Key-Info). 
 
 The encoder-decoder model proved their worth in machine translation tasks so researchers started using it for translating image features into language in a similar way. However, the biggest difference between translating the extracted features of an image and a French sentence both to an English sentence is that the visual information need to be heavily compressed into a just few bytes. Therefore, to build an image captioning model with the encoder-decoder model, the attention algorithm that is able to pick out only the key to higher performance. 
 
@@ -23,7 +23,7 @@ Neural image captioning is about giving machines the ability of compressing sali
 
 <p align="center"><img src="assets/architecture.png" width="75%" height="75%"></p>
 
-For detailed background info on feature extraction, soft/hard self-attention, and sequence generation with LSTM, [resources section](#Resources) contains a number of useful links/papers I used. Wrapping your head around how image encoding, attention, and LSTM come together is the key to understanding this implementation (top-down approach). I watched videos and read blogs to get the overall architecture then dived into the [the paper](https://arxiv.org/abs/1502.03044) to understand the math formulae. Additionally, the comments on my code might help. 
+For detailed background info on feature extraction, soft/hard self-attention, and sequence generation with LSTM, [resources section](#Resources) contains a number of useful links/papers I used. Wrapping my head around how image encoding, attention, and LSTM come together led me to understanding this implementation (top-down approach). 
 
 ---
 
@@ -46,19 +46,13 @@ Below are some of my choices about the implementation (chronological order).
 
 ## Performance
 
-Under development.
+For beam size of 4, my [final model]() reached 32.83 BLEU score.
 
 ---
 
-## Try it Yourself
-
-#### Dependencies
+## Dependencies
 
 NumPy, os, json, h5py, PyTorch, matplotlib, Pillow, scikit-image, SciPy, Jupyter Notebook/Google Colab, tqdm.
-
-#### Train
-
-Under development.
 
 ---
 

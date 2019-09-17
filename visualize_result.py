@@ -23,11 +23,11 @@ ap.add_argument('-i', '--input', help='image path')
 ap.add_argument('-o', '--output', help='output path')
 ap.add_argument('-m', '--model', default="model/final_model.pth.tar", help='model path')
 ap.add_argument('-w', '--wordmap', default="model/final_wordmap.json", help='word map path')
-ap.add_argument('-b', '--beam_size', default=3, help='beam size')
+ap.add_argument('-b', '--beam_size', default=4, help='beam size')
 args = ap.parse_args()
 
 
-def caption_image(enc, dec, input_path, word_map, b=3):
+def caption_image(enc, dec, input_path, word_map, b=4):
     """
     Captions an image with beam search. "b" is beam search size.
     """
