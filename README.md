@@ -1,7 +1,3 @@
-I'm currently a bit caught up with research and uni in general, will actually get the training done in a later date.
-
-<img src="https://pics.me.me/my-old-programming-projects-waiting-for-me-to-finish-them-61958056.png">
-
 # Image Captioning
 
 To explore the fascinating intersections between computer vision and natural language processing, I implemented the image captioning model in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) with [some tweaks](#Key-Info). 
@@ -10,7 +6,7 @@ The encoder-decoder model proved their worth in machine translation tasks so res
 
 In this project, I learned a lot about integrating feature extraction with attention and LSTM, the underlying math equations from papers, and even using PyTorch framework. Below is a sample result of my trained model. 
 
-<p align="center"><img src="assets/results/1.jpg"></p>
+<p align="center"><img src="assets/g1.jpg"></p>
 
 ---
 
