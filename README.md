@@ -1,6 +1,6 @@
 # Image Captioning
 
-To explore the fascinating intersections between computer vision and natural language processing, I implemented the image captioning model in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) with [customizations](#Key-Info).
+To explore the fascinating intersections between computer vision and natural language processing, I implemented the image captioning model in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) with [some tweaks](#Key-Info).
 
 The encoder-decoder model proved their worth in machine translation tasks so researchers started using it for translating image features into language in a similar way. However, the biggest difference between translating the extracted features of an image and a French sentence both to an English sentence is that the visual information need to be heavily compressed into a just few bytes. Therefore, to build an image captioning model with the encoder-decoder model, the attention algorithm that is able to pick out only the key to higher performance. 
 
