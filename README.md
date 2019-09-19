@@ -2,16 +2,15 @@
 
 To explore the fascinating intersections between **computer vision** and **natural language processing**, I implemented the image captioning model in [Show, Attend and Tell](https://arxiv.org/abs/1502.03044) with [some tweaks](#Key-Info). 
 
-For a bit of history, the encoder-decoder model proved their worth in machine translation tasks so researchers started using it for translating image features into language in a similar way. However, the biggest difference between translating the extracted features of an image and a French sentence both to an English sentence is that the visual information need to be heavily compressed into a just few bytes. Therefore, to build an image captioning model with the encoder-decoder model, the attention algorithm that lets the neural network "focus" on parts of the image when outputting each word is the key to higher performance. 
+> In this project, I learned a lot about integrating feature extraction with attention and LSTM, the underlying math equations from papers, and using PyTorch framework. Below is are results of my trained model (30 of them in `output`). 
 
-In this project, I learned a lot about integrating feature extraction with attention and LSTM, the underlying math equations from papers, and using PyTorch framework. Below is are results of my trained model (30 of them in `output`). 
-
-<p align="center"><img src="assets/g1.jpg" width="80%" height="80%"></p>
-<p align="center"><img src="assets/g2.jpg" width="80%" height="80%"></p>
+<p align="center"><img src="assets/image.jpg" width="70%" height="70%"></p>
 
 ---
 
 ## Background
+
+For a bit of history, the simple **encoder-decoder** model proved their worth in machine translation tasks so researchers started trying to translate images into natural language in a similar way. However, the biggest difference between translating the extracted features of an image and a French sentence both to an English sentence is that the visual information need to be heavily compressed into a just few bytes with minimal loss of spatial information. Therefore, to build an image captioning model with the encoder-decoder model, an **attention** mechanism that lets the neural network "focus" on parts of the image when outputting each word is the key to increased performance. 
 
 From [Show, Attend and Tell](https://arxiv.org/abs/1502.03044):
 > Automatically generating captions of an image is a task very close to the heart of scene understanding - one of the primary goals of computer vision.
@@ -20,22 +19,22 @@ Neural image captioning is about giving machines the ability of compressing sali
 
 <p align="center"><img src="assets/architecture.png" width="75%" height="75%"></p>
 
-For detailed background info on feature extraction, soft/hard self-attention, and sequence generation with LSTM, [resources section](#Resources) contains a number of useful links/papers I used. Wrapping my head around how image encoding, attention, and LSTM come together led me to understanding this implementation (top-down approach). 
+For detailed background info on feature extraction, soft/hard self-attention, and sequence generation with LSTM, [the resources section](#Resources) contains a number of useful links/papers I used. Wrapping my head around how image encoding, attention, and LSTM integrate together led me to understanding this implementation (top-down approach). 
 
 ---
 
 ## Key Info
 
-Below are some of my choices about the implementation (chronological order).
+Below are some of my choices for the implementation in chronological order.
 
 - **PyTorch** both for its pythonic syntax and to utilize the strong GPU acceleration. There is less documentation on PyTorch so I ended up learning a lot more by reading some source code
-- **Colab's T4 GPU** from google (thank you!), which was strong enough for Flickr30k with small batch sizes (max 12)
+- **Colab's T4 GPU** from google, which was strong enough for Flickr30k with small batch sizes (max 12)
 - **Flickr30k** dataset because MS COCO requires enormous training time and computational power for Colab. [Link to download](http://cs.stanford.edu/people/karpathy/deepimagesent/caption_datasets.zip) from Andrej Karpathy. He also clarified why there is a 'restval' split in [this tweet](https://twitter.com/karpathy/status/592193801310973952)
-- **No pre-trained embedding** because training my own embedding is not so computationally expensive and fits to context
-- **Soft attention** (deterministic) for its differentiability (simple standard backprop). Intuitively, soft attention looks at the whole image while focusing on some parts while hard attention only looks at one randomly weighted choice at a time
+- **No pre-trained embedding** because training embedding from scratch is not a heavy tasks and it allows my NLP model to fit to context
+- **Soft attention** (deterministic) for its differentiability (standard backprop). Intuitively, soft attention looks at the whole image while focusing on some parts while hard attention only looks at one randomly weighted choice at a time
 - **Mult-layer perceptron** for the attention model, as from [the paper](https://arxiv.org/abs/1502.03044)
-- **Doubly stochastic attention regularization parameter** was used to encourage the model to pay equal attention to every part of the image over a course of generation. This was used to improve the score in [the paper](https://arxiv.org/abs/1502.03044).
-- **Early stopping** to terminate training if the BLEU score did not improve for 10 epochs, the best model checkpoint would be saved
+- **Doubly stochastic attention regularization parameter** was used to encourage the model to pay equal attention to every part of the image over a course of generation. This was used to improve the score in [the paper](https://arxiv.org/abs/1502.03044)
+- **Early stopping** to terminate training early. If the BLEU score does not improve for over 10 epochs, the best model checkpoint would be saved
 - **BLEU-4** score for both training (early stopping) and evaluation
 - **Beam Search** to find the most optimal sequence after decoder does the heavy lifting
 
@@ -47,24 +46,28 @@ For beam size of 4, my [final model](https://drive.google.com/drive/folders/1fov
 
 ---
 
+## Possible Improvements
+
+- Better hardware enables the use of MS COCO dataset, higher batch size, higher epoch
+- Try hard-attention (stochastic approach) and compare performances
+- Fine-tune ResNet longer to fit the dataset
+- Instead of teacher forcing for each word, [scheduled sampling](https://arxiv.org/pdf/1506.03099.pdf) has been proven to be better based on probability
+- As mentioned in [the paper](https://arxiv.org/abs/1502.03044), a major drawback of using attention is distilling the important parts of an image especially on images that have a lot of things going on. This problem is addressed by [DenseCap](https://cs.stanford.edu/people/karpathy/densecap/) where the objects are first recognized in separate windows
+
+---
+
 ## Dependencies
 
 NumPy, os, json, h5py, PyTorch, matplotlib, Pillow, scikit-image, SciPy, Jupyter Notebook/Google Colab, tqdm.
 
 ---
 
-## Possible Improvements
+## Try it
 
-- Better hardware enables the use of MS COCO, higher batch size, higher epoch
-- Try hard-attention and compare performances
-- Fine-tune ResNet longer to fit the dataset
-- Perform image augmentation (ie. horizontal flip) ie MS COCO is still not enough (unlikely)
-- Instead of constant teacher forcing, [scheduled sampling](https://arxiv.org/pdf/1506.03099.pdf) has been proven to be better based on probability.
-- As mentioned in [the paper](https://arxiv.org/abs/1502.03044), a major drawback of using attention is distilling the important parts of an image especially on images that have a lot of things going on. This problem is addressed by [DenseCap](https://cs.stanford.edu/people/karpathy/densecap/) where the objects are first recognized in separate windows. 
-
----
+To see what my model would say about your own image, call `Python visualize_result.py -i /path/to/image -o /path/to/output`.
 
 ## Files 
+
 <pre>
 README.md            - self
 
